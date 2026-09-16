@@ -1,0 +1,28 @@
+--cpu Cortex-M3
+"stepping_motor\startup_stm32f103xb.o"
+"stepping_motor\main.o"
+"stepping_motor\gpio.o"
+"stepping_motor\i2c.o"
+"stepping_motor\tim.o"
+"stepping_motor\stm32f1xx_it.o"
+"stepping_motor\stm32f1xx_hal_msp.o"
+"stepping_motor\stm32f1xx_hal_gpio_ex.o"
+"stepping_motor\stm32f1xx_hal_i2c.o"
+"stepping_motor\stm32f1xx_hal.o"
+"stepping_motor\stm32f1xx_hal_rcc.o"
+"stepping_motor\stm32f1xx_hal_rcc_ex.o"
+"stepping_motor\stm32f1xx_hal_gpio.o"
+"stepping_motor\stm32f1xx_hal_dma.o"
+"stepping_motor\stm32f1xx_hal_cortex.o"
+"stepping_motor\stm32f1xx_hal_pwr.o"
+"stepping_motor\stm32f1xx_hal_flash.o"
+"stepping_motor\stm32f1xx_hal_flash_ex.o"
+"stepping_motor\stm32f1xx_hal_exti.o"
+"stepping_motor\stm32f1xx_hal_tim.o"
+"stepping_motor\stm32f1xx_hal_tim_ex.o"
+"stepping_motor\system_stm32f1xx.o"
+"stepping_motor\fun.o"
+--strict --scatter "stepping_motor\stepping_motor.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "stepping_motor.map" -o stepping_motor\stepping_motor.axf
