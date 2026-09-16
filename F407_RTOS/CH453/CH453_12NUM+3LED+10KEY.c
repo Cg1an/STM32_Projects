@@ -1,0 +1,80 @@
+#include "CH453.h"
+#include "gpio.h"
+
+#define CH351_LED1 CH351_CS_Pin
+#define CH351_LED2 CH351_RST_Pin
+#define CH351_LED3 CH351_D3_Pin
+
+#define CH351_KEY1  CH351_INT_Pin
+#define CH351_KEY2  CH351_A0_Pin
+#define CH351_KEY3  CH351_A1_Pin
+#define CH351_KEY4  CH351_A2_Pin
+#define CH351_KEY5  CH351_D0_Pin
+#define CH351_KEY6  CH351_D1_Pin
+#define CH351_KEY7  CH351_D2_Pin
+#define CH351_KEY8  CH351_D4_Pin
+#define CH351_KEY9  CH351_D5_Pin
+#define CH351_KEY10 CH351_D6_Pin
+
+#define CH351_KEYA  CH351_INT_GPIO_Port
+#define CH351_KEYC  CH351_A0_GPIO_Port
+#define CH351_KEYD  CH351_D0_GPIO_Port
+
+uint8_t CH453_12NUM_3LED[13];  //前面12个是数字，后面1个是LED
+uint16_t CH453_3_10_10KEY;
+
+void CH453_12NUM_3LED_10KEY_init(void)
+{ 
+  //初始化地址表格
+  CH453_WriteByte(CH453_SET);
+	//MX_GPIO_Init_keych351();
+}
+
+void CH453_WRITE12NUM(uint8_t * num,uint8_t length)
+{
+	 // CH453_WriteByte(CH453_SET);
+  CH453_WriteByte(CH453_SET); 
+	uint8_t j;
+  for(j=0;j<12;j++)
+  {
+     CH453_WriteByte(0X6000+0x200*j+num[j]); 
+  }	
+}
+uint8_t aaaa;
+void CH453_WRITE3LED(uint8_t LED)
+{
+  HAL_GPIO_WritePin(CH351_D3_GPIO_Port,CH351_LED3,((LED&0X01)>=0x01)?GPIO_PIN_RESET:GPIO_PIN_SET);
+  HAL_GPIO_WritePin(CH351_CS_GPIO_Port,CH351_LED2,((LED&0X02)>=0x02)?GPIO_PIN_RESET:GPIO_PIN_SET);
+	HAL_GPIO_WritePin(CH351_CS_GPIO_Port,CH351_LED1,((LED&0X04)>=0x04)?GPIO_PIN_RESET:GPIO_PIN_SET);
+}
+
+
+uint16_t CH453_READ10KEY(void)
+{
+	 uint16_t KEY=0;
+    KEY+=HAL_GPIO_ReadPin(CH351_KEYA,CH351_KEY1);
+	 KEY=KEY<<1;
+	  KEY+=HAL_GPIO_ReadPin(CH351_KEYC,CH351_KEY2);
+	 KEY=KEY<<1;
+	  KEY+=HAL_GPIO_ReadPin(CH351_KEYC,CH351_KEY3);
+	 KEY=KEY<<1;
+	  KEY+=HAL_GPIO_ReadPin(CH351_KEYC,CH351_KEY4);
+	 KEY=KEY<<1;
+	  KEY+=HAL_GPIO_ReadPin(CH351_KEYD,CH351_KEY5);
+	 KEY=KEY<<1;
+	  KEY+=HAL_GPIO_ReadPin(CH351_KEYD,CH351_KEY6);
+	 KEY=KEY<<1;
+	  KEY+=HAL_GPIO_ReadPin(CH351_KEYD,CH351_KEY7);
+	 KEY=KEY<<1;
+	  KEY+=HAL_GPIO_ReadPin(CH351_KEYD,CH351_KEY8);
+	 KEY=KEY<<1;
+	  KEY+=HAL_GPIO_ReadPin(CH351_KEYD,CH351_KEY9);
+	 KEY=KEY<<1;
+	  KEY+=HAL_GPIO_ReadPin(CH351_KEYD,CH351_KEY10);
+	 return KEY;
+}
+
+
+
+
+	
