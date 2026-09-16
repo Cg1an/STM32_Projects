@@ -1,0 +1,27 @@
+# Keil build output
+MDK-ARM/*/*.o
+MDK-ARM/*/*.d
+MDK-ARM/*/*.crf
+MDK-ARM/*/*.axf
+MDK-ARM/*/*.hex
+MDK-ARM/*/*.htm
+MDK-ARM/*/*.map
+MDK-ARM/*/*.lnp
+MDK-ARM/*/*.sct
+MDK-ARM/*/*.lst
+MDK-ARM/*/*.dep
+MDK-ARM/*/*.iex
+MDK-ARM/*/*.Bak
+MDK-ARM/*/ExtDll.iex
+
+# Keil user settings & logs
+*.uvguix.*
+JLinkLog.txt
+JLinkSettings.ini
+
+# Backup / conflict leftovers
+*.orig
+
+# OS files
+.DS_Store
+Thumbs.db
