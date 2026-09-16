@@ -1,0 +1,209 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file    gpio.c
+  * @brief   This file provides code for the configuration
+  *          of all used GPIO pins.
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2026 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+
+/* Includes ------------------------------------------------------------------*/
+#include "gpio.h"
+#include "can.h"
+#include "motor_ctrl.h"
+
+/* USER CODE BEGIN 0 */
+uint8_t Can_Mode_Cmd[8] = {0};
+uint8_t receive_success_1 = 0;
+/* USER CODE END 0 */
+
+/*----------------------------------------------------------------------------*/
+/* Configure GPIO                                                             */
+/*----------------------------------------------------------------------------*/
+/* USER CODE BEGIN 1 */
+
+/* USER CODE END 1 */
+
+uint8_t Mode_change(uint8_t led_state)
+{
+    if (HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin) == GPIO_PIN_SET)
+    {
+        HAL_Delay(50); // 2. 软件消抖 50ms
+
+        // 3. 再次确认按键确实按下了
+        if (HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin) == GPIO_PIN_SET)
+        {
+            // --- 状态切换逻辑 ---
+            if (led_state == 2)
+            {
+                //CAN 发送更改控制模式的数据
+                // --- 发送 CAN 指令：设置控制途径为 CAN (0x0A) + 速度闭环 (0x01) ---
+                // 寄存器 0x0103
+                Can_Mode_Cmd[0] = 0x2B; // 写2字节
+                Can_Mode_Cmd[1] = 0x03; // 0x0103 低字节
+                Can_Mode_Cmd[2] = 0x01; // 0x0103 高字节
+                Can_Mode_Cmd[3] = 0x00;
+                Can_Mode_Cmd[4] = 0x0A; // Data Low:  0x0A (CAN控制)
+                Can_Mode_Cmd[5] = 0x01; // Data High: 0x01 (速度闭环)
+                Can_Mode_Cmd[6] = 0x00;
+                Can_Mode_Cmd[7] = 0x00;
+
+                // CANx_SendStdData 返回 0 表示成功放入邮箱，非 0 表示失败
+                if (CANx_SendStdData(&hcan2, 0x600, Can_Mode_Cmd) != 0)
+                {
+                    // --- 发送失败处理 ---
+                    // 既然没发出去，就保持原样，不切换模式
+                    // 可以在这里闪烁一下红灯报错，或者什么都不做直接重试
+                    // Error_Handler(); // 可选：调用错误处理
+                    return 1; // 结束本次 if，直接进入下一次循环 (千万别用 return!)
+                }
+								// 只要没收到，且时间没到 50ms，就一直查
+                uint32_t wait_start = HAL_GetTick();
+                
+
+                while ((HAL_GetTick() - wait_start) < 50)
+                {
+                    if (CANx_ReceiveStdData(&hcan2, &Rx_id, Can_Rx_Data, &Rx_len) == 0)
+                    {
+                        receive_success_1 = 1; // 收到信了！
+                        break;               // 退出等待循环
+                    }
+                }
+
+                if (receive_success_1 == 1)
+                {
+                    // 校验返回 ID: 应该是 0x580 + node_id
+                    if (Rx_id == (CAN_BASE_ID_RX + 0))
+                    {
+                        if (Can_Rx_Data[0] == CAN_CMD_WRITE_SUCCESS)
+                        {
+                            //CANx_SendStdData(&hcan2, 0x600, Can_Mode_Cmd);
+                            led_state = 3; // 其他情况(初始或红灯)，切换到绿灯模式
+                            HAL_GPIO_WritePin(GPIOE, LED_R_TEST_Pin, GPIO_PIN_SET); // 红灭
+                HAL_GPIO_WritePin(GPIOF, LED_G_TEST_Pin, GPIO_PIN_RESET);   // 绿亮
+                        }
+                        else if (Can_Rx_Data[0] == CAN_CMD_FAIL)
+                        {
+                            return 1;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //CAN 发送更改控制模式的数据
+                // --- 发送 CAN 指令：设置控制途径为 RCPWM (0x05) + 速度开环 (0x00) ---
+                // 寄存器 0x0103
+                Can_Mode_Cmd[0] = 0x2B; // 写2字节
+                Can_Mode_Cmd[1] = 0x03; // 0x0103 低字节
+                Can_Mode_Cmd[2] = 0x01; // 0x0103 高字节
+                Can_Mode_Cmd[3] = 0x00;
+                Can_Mode_Cmd[4] = 0x05; // Data Low:  0x05 (RCPWM)
+                Can_Mode_Cmd[5] = 0x00; // Data High: 0x00 (速度开环)
+                Can_Mode_Cmd[6] = 0x00;
+                Can_Mode_Cmd[7] = 0x00;
+
+                // CANx_SendStdData 返回 0 表示成功放入邮箱，非 0 表示失败
+                if (CANx_SendStdData(&hcan2, 0x600, Can_Mode_Cmd) != 0)
+                {
+                    // --- 发送失败处理 ---
+                    // 既然没发出去，就保持原样，不切换模式
+                    // 可以在这里闪烁一下红灯报错，或者什么都不做直接重试
+                    // Error_Handler(); // 可选：调用错误处理
+                    return 1; // 结束本次 if，直接进入下一次循环 (千万别用 return!)
+                }
+
+                // 只要没收到，且时间没到 50ms，就一直查
+                uint32_t wait_start = HAL_GetTick();
+                
+
+                while ((HAL_GetTick() - wait_start) < 50)
+                {
+                    if (CANx_ReceiveStdData(&hcan2, &Rx_id, Can_Rx_Data, &Rx_len) == 0)
+                    {
+                        receive_success_1 = 1; // 收到信了！
+                        break;               // 退出等待循环
+                    }
+                }
+
+                if (receive_success_1 == 1)
+                {
+                    // 校验返回 ID: 应该是 0x580 + node_id
+                    if (Rx_id == (CAN_BASE_ID_RX + 0))
+                    {
+                        if (Can_Rx_Data[0] == CAN_CMD_WRITE_SUCCESS)
+                        {
+                            //CANx_SendStdData(&hcan2, 0x600, Can_Mode_Cmd);
+                            led_state = 2; // 其他情况(初始或红灯)，切换到绿灯模式
+                            HAL_GPIO_WritePin(GPIOF, LED_G_TEST_Pin, GPIO_PIN_SET); // 绿灭
+                            HAL_GPIO_WritePin(GPIOE, LED_R_TEST_Pin, GPIO_PIN_RESET);   // 红亮
+                        }
+                        else if (Can_Rx_Data[0] == CAN_CMD_FAIL)
+                        {
+                            return 1;
+                        }
+                    }
+                }
+            }
+
+            // 4. 死循环等待按键松开 (防止长按导致状态乱跳)
+            while (HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin) == GPIO_PIN_SET)
+            {
+                HAL_Delay(10);
+            }
+        }
+    }
+}
+
+/** Configure pins as
+        * Analog
+        * Input
+        * Output
+        * EVENT_OUT
+        * EXTI
+*/
+void MX_GPIO_Init(void)
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    /* GPIO Ports Clock Enable */
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOH_CLK_ENABLE();
+    __HAL_RCC_GPIOF_CLK_ENABLE();
+    __HAL_RCC_GPIOE_CLK_ENABLE();
+    /*Configure GPIO pin Output Level */
+    //  HAL_GPIO_WritePin(GPIOF,LED_R_TEST_Pin|LED_G_TEST_Pin, GPIO_PIN_RESET);
+    /*Configure GPIO pin : KEY_Pin */
+    GPIO_InitStruct.Pin = KEY_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init(KEY_GPIO_Port, &GPIO_InitStruct);
+    /*Configure GPIO pin : LED_G_TEST_Pin */
+    GPIO_InitStruct.Pin = LED_G_TEST_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+    GPIO_InitStruct.Pin = LED_R_TEST_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+    HAL_GPIO_WritePin(GPIOF, LED_G_TEST_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOE, LED_R_TEST_Pin, GPIO_PIN_SET);
+}
+
+/* USER CODE BEGIN 2 */
+
+/* USER CODE END 2 */
