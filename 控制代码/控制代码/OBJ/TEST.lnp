@@ -1,0 +1,23 @@
+--cpu=Cortex-M4.fp.sp
+"..\obj\startup_stm32f40_41xxx.o"
+"..\obj\test.o"
+"..\obj\algorithm.o"
+"..\obj\lsm.o"
+"..\obj\matrix.o"
+"..\obj\delay.o"
+"..\obj\sys.o"
+"..\obj\usart.o"
+"..\obj\led.o"
+"..\obj\timer.o"
+"..\obj\adc.o"
+"..\obj\dma.o"
+"..\obj\can.o"
+"..\obj\can_user.o"
+"..\obj\mpu.o"
+"..\obj\spi.o"
+"..\obj\j6006.o"
+"..\obj\dshot.o"
+--strict --scatter "..\OBJ\TEST.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "..\OBJ\TEST.map" -o ..\OBJ\TEST.axf

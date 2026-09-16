@@ -1,0 +1,14 @@
+..\obj\mpu.o: ..\HARDWARE\MPU\MPU.c
+..\obj\mpu.o: ..\HARDWARE\MPU\MPU.h
+..\obj\mpu.o: ..\SYSTEM\sys\sys.h
+..\obj\mpu.o: ..\SYSTEM\sys\stm32f4xx.h
+..\obj\mpu.o: ..\SYSTEM\sys\core_cm4.h
+..\obj\mpu.o: D:\Sofeware\keli5_542\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\mpu.o: ..\SYSTEM\sys\core_cmInstr.h
+..\obj\mpu.o: ..\SYSTEM\sys\core_cmFunc.h
+..\obj\mpu.o: ..\SYSTEM\sys\core_cm4_simd.h
+..\obj\mpu.o: ..\SYSTEM\sys\system_stm32f4xx.h
+..\obj\mpu.o: ..\USER\datatype.h
+..\obj\mpu.o: ..\SYSTEM\delay\delay.h
+..\obj\mpu.o: ..\HARDWARE\DMA\dma.h
+..\obj\mpu.o: ..\HARDWARE\LED\led.h

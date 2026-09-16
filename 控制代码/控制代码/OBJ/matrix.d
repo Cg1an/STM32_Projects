@@ -1,0 +1,10 @@
+..\obj\matrix.o: ..\ALGORITHM\Matrix.c
+..\obj\matrix.o: ..\ALGORITHM\Matrix.h
+..\obj\matrix.o: ..\SYSTEM\sys\sys.h
+..\obj\matrix.o: ..\SYSTEM\sys\stm32f4xx.h
+..\obj\matrix.o: ..\SYSTEM\sys\core_cm4.h
+..\obj\matrix.o: D:\Sofeware\keli5_542\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\matrix.o: ..\SYSTEM\sys\core_cmInstr.h
+..\obj\matrix.o: ..\SYSTEM\sys\core_cmFunc.h
+..\obj\matrix.o: ..\SYSTEM\sys\core_cm4_simd.h
+..\obj\matrix.o: ..\SYSTEM\sys\system_stm32f4xx.h

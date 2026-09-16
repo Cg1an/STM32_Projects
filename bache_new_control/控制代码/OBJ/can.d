@@ -1,0 +1,15 @@
+..\obj\can.o: ..\HARDWARE\CAN\can.c
+..\obj\can.o: ..\HARDWARE\CAN\can.h
+..\obj\can.o: ..\SYSTEM\sys\sys.h
+..\obj\can.o: ..\SYSTEM\sys\stm32f4xx.h
+..\obj\can.o: ..\SYSTEM\sys\core_cm4.h
+..\obj\can.o: D:\Sofeware\keli5_542\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\can.o: ..\SYSTEM\sys\core_cmInstr.h
+..\obj\can.o: ..\SYSTEM\sys\core_cmFunc.h
+..\obj\can.o: ..\SYSTEM\sys\core_cm4_simd.h
+..\obj\can.o: ..\SYSTEM\sys\system_stm32f4xx.h
+..\obj\can.o: ..\HARDWARE\CAN\canuser.h
+..\obj\can.o: ..\SYSTEM\delay\delay.h
+..\obj\can.o: ..\SYSTEM\usart\usart.h
+..\obj\can.o: D:\Sofeware\keli5_542\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\can.o: ..\HARDWARE\DMA\dma.h

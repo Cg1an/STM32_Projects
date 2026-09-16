@@ -1,0 +1,11 @@
+..\obj\j6006.o: ..\HARDWARE\DM_J6006\J6006.c
+..\obj\j6006.o: ..\HARDWARE\DM_J6006\J6006.h
+..\obj\j6006.o: ..\SYSTEM\sys\sys.h
+..\obj\j6006.o: ..\SYSTEM\sys\stm32f4xx.h
+..\obj\j6006.o: ..\SYSTEM\sys\core_cm4.h
+..\obj\j6006.o: D:\Sofeware\keli5_542\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\j6006.o: ..\SYSTEM\sys\core_cmInstr.h
+..\obj\j6006.o: ..\SYSTEM\sys\core_cmFunc.h
+..\obj\j6006.o: ..\SYSTEM\sys\core_cm4_simd.h
+..\obj\j6006.o: ..\SYSTEM\sys\system_stm32f4xx.h
+..\obj\j6006.o: ..\HARDWARE\CAN\can.h
