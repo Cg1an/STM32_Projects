@@ -1,0 +1,6 @@
+--cpu Cortex-M4.fp -g --apcs=interwork -I ../Core/Inc -I C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Drivers/CMSIS/Include -I "F:/CubeMaxÈí¼þ/Firmware Package/Packs/STMicroelectronics/X-CUBE-ALGOBUILD/1.4.0/Middlewares/Third_Party/ARM/DSP/Inc" -I ../Middlewares/ST/ARM/DSP/Inc
+-I.\RTE\_MAN_A
+-ID:\Users\xhf\AppData\Local\Arm\Packs\ARM\CMSIS\6.3.0\CMSIS\Core\Include
+-ID:\Users\xhf\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+--pd "__UVISION_VERSION SETA 525" --pd "_RTE_ SETA 1" --pd "STM32F427xx SETA 1"
+--list startup_stm32f427xx.lst --xref -o man_a\startup_stm32f427xx.o --depend man_a\startup_stm32f427xx.d "startup_stm32f427xx.s"

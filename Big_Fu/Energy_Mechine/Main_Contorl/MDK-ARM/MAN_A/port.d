@@ -1,0 +1,12 @@
+man_a\port.o: C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c
+man_a\port.o: C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+man_a\port.o: D:\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+man_a\port.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+man_a\port.o: ../Core/Inc/FreeRTOSConfig.h
+man_a\port.o: C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+man_a\port.o: C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+man_a\port.o: C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+man_a\port.o: C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+man_a\port.o: C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+man_a\port.o: C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+man_a\port.o: C:/Users/86158/STM32Cube/Repository/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/include/list.h

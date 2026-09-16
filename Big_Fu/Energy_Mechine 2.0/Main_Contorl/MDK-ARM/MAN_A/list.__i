@@ -1,0 +1,6 @@
+--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Hardware -I ../dm4340 -I ../MY_Task -I "F:/CubeMax软件/FirmwarePackage/STM32Cube_FW_F4_V1.28.3/Drivers/STM32F4xx_HAL_Driver/Inc" -I "F:/CubeMax软件/FirmwarePackage/STM32Cube_FW_F4_V1.28.3/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I "F:/CubeMax软件/FirmwarePackage/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/include" -I "F:/CubeMax软件/FirmwarePackage/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS" -I "F:/CubeMax软件/FirmwarePackage/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F" -I "F:/CubeMax软件/FirmwarePackage/STM32Cube_FW_F4_V1.28.3/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I "F:/CubeMax软件/FirmwarePackage/STM32Cube_FW_F4_V1.28.3/Drivers/CMSIS/Include"
+-I.\RTE\_MAN_A
+-I"E:\Keil 5\Keil 5 APP\ARM\CMSIS\5.7.0\CMSIS\Core\Include"
+-I"E:\Keil 5\Keil 5 APP\Keil\STM32F4xx_DFP\2.17.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include"
+-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx
+-o man_a\list.o --omf_browse man_a\list.crf --depend man_a\list.d "F:/CubeMax软件/Firmware Package/STM32Cube_FW_F4_V1.28.3/Middlewares/Third_Party/FreeRTOS/Source/list.c"

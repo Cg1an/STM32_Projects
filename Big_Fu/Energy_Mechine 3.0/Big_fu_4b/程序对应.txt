@@ -1,0 +1,11 @@
+spin5---- 
+改BOARD_NUMBER的值和can_protocal.c  和   CAN_receive.c里对应函数 ，
+BOARD_NUMBER=0--1号板，
+BOARD_NUMBER=2--3号板，
+BOARD_NUMBER=4--5号板，
+spin2----2号板
+spin4----4号板
+
+
+
+实物没标号的是5号，1,2,4标号了，剩那个是3号
